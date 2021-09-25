@@ -104,15 +104,35 @@ def depthFirstSearch(problem):
                 return path
 
             for nextNode, nodePath, cost in problem.getSuccessors(node):
-                new = path + [nodePath]
-                stack.push((nextNode, new))
+                newPath = path + [nodePath]
+                stack.push((nextNode, newPath))
 
     "util.raiseNotDefined()"
 
 def breadthFirstSearch(problem):
+
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    first = problem.getStartState()
+    visited = []
+    queue = util.Queue()
+    queue.push((first, []))
+
+    while not queue.isEmpty():
+        node, path = queue.pop()
+
+        if node not in visited:
+            visited.append(node)
+
+            if problem.isGoalState(node):
+                return path
+
+            for nextNode, nodePath, cost in problem.getSuccessors(node):
+                newPath = path + [nodePath]
+                queue.push((nextNode, newPath))
+
+    "util.raiseNotDefined()"
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
