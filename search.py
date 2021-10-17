@@ -93,6 +93,10 @@ def depthFirstSearch(problem):
     stack = util.Stack()
     stack.push((first, []))
 
+    if stack.isEmpty():
+        print("Error: no nodes found")
+        return exit(1)
+
     while not stack.isEmpty():
 
         node, path = stack.pop()
@@ -119,6 +123,10 @@ def breadthFirstSearch(problem):
     queue = util.Queue()
     queue.push((first, []))
 
+    if queue.isEmpty():
+        print("Error: no nodes found")
+        return exit(1)
+
     while not queue.isEmpty():
 
         node, path = queue.pop()
@@ -144,6 +152,10 @@ def uniformCostSearch(problem):
     visited = []
     prqueue = util.PriorityQueue();
     prqueue.push((first, [], 0), 0)
+
+    if prqueue.isEmpty():
+        print("Error: no nodes found")
+        return exit(1)
 
     while not prqueue.isEmpty():
 
@@ -177,6 +189,10 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     visited = []
     prqueue = util.PriorityQueue();
     prqueue.push((first, [], 0), 0)
+
+    if prqueue.isEmpty():
+        print("Error: no nodes found")
+        return exit(1)
 
     while not prqueue.isEmpty():
 

@@ -165,6 +165,7 @@ class PositionSearchProblem(search.SearchProblem):
         self._visited, self._visitedlist, self._expanded = {}, [], 0 # DO NOT CHANGE
 
     def getStartState(self):
+
         return self.startState
 
     def isGoalState(self, state):
@@ -285,9 +286,14 @@ class CornersProblem(search.SearchProblem):
             if not startingGameState.hasFood(*corner):
                 print('Warning: no food in corner ' + str(corner))
         self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
+
         # Please add any code here which you would like to use
-        # in initializing the problem
+        # in initializing the problem.
+
         "*** YOUR CODE HERE ***"
+
+        self.corners_visited = [(0,0),(0,1),(1,0),(1,1)]
+
 
     def getStartState(self):
         """
@@ -295,6 +301,8 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
+
+        return self.startingPosition, self.corners
         util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -302,6 +310,10 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
+
+        currentPosition, corners_visited = state
+        return len(list(corners_visited))== 0
+
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -325,6 +337,23 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+
+            currentPosition, corners_visited = state
+            x, y = currentPosition
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+
+            if not hitsWall:
+
+                nextPosition = (nextx, nexty)
+                list = set(corners_visited)
+
+                if nextPosition in list:
+
+                    list.remove(nextPosition)
+
+                successors.append(((nextPosition, tuple(list)), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
