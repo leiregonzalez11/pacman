@@ -168,9 +168,10 @@ def uniformCostSearch(problem):
             visited.append(node)
 
             for nextNode, nodePath, cost in problem.getSuccessors(node):
-                newPath = path + [nodePath]
-                newCost = actualcost + cost
-                prqueue.push((nextNode, newPath, newCost), newCost)
+                if nextNode not in visited:
+                    newPath = path + [nodePath]
+                    newCost = actualcost + cost
+                    prqueue.push((nextNode, newPath, newCost), newCost)
 
     "util.raiseNotDefined()"
 

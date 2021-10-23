@@ -468,20 +468,6 @@ class AStarFoodSearchAgent(SearchAgent):
         self.searchFunction = lambda prob: search.aStarSearch(prob, foodHeuristic)
         self.searchType = FoodSearchProblem
 
-def closestPoint(fromPoint, candidatesList):
-        if len(candidatesList) == 0:
-            return None
-
-        closestPoint = candidatesList[0]
-        closestCost = util.manhattanDistance(fromPoint, closestPoint)
-        for candidate in candidatesList[1:]:
-            thisCost = util.manhattanDistance(fromPoint, candidate)
-            if thisCost < closestCost:
-                closestCost = thisCost
-                closestPoint = candidate
-
-        return closestPoint
-
 def foodHeuristic(state, problem):
     """
     Your heuristic for the FoodSearchProblem goes here.
@@ -556,13 +542,34 @@ class ClosestDotSearchAgent(SearchAgent):
         gameState.
         """
         # Here are some useful elements of the startState
-        startPosition = gameState.getPacmanPosition()
-        food = gameState.getFood()
-        walls = gameState.getWalls()
-        problem = AnyFoodSearchProblem(gameState)
+        #startPosition = gameState.getPacmanPosition()
+        #food = gameState.getFood()
+        #walls = gameState.getWalls()
+        #problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        food = gameState.getFood()
+        problem = AnyFoodSearchProblem(gameState)
+        foodList = food.asList()
+        startPosition = gameState.getPacmanPosition()
+
+        queue = util.Queue()
+        visited = []
+        queue.push((startPosition, []))
+
+        while not queue.isEmpty():
+            actPosition, path = queue.pop()
+
+            if actPosition not in visited:
+                visited.append(actPosition)
+
+                if problem.isGoalState(actPosition):
+                    return path
+
+                for nextNode, nodePath, cost in problem.getSuccessors(actPosition):
+                    newPath = path + [nodePath]
+                    queue.push((nextNode, newPath))
 
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
@@ -598,6 +605,8 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         x,y = state
 
         "*** YOUR CODE HERE ***"
+
+        return state in self.food.asList()
         util.raiseNotDefined()
 
 def mazeDistance(point1, point2, gameState):
