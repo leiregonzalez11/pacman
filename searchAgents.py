@@ -398,7 +398,7 @@ def cornersHeuristic(state, problem):
 
             for goal in goals:
 
-                heuristic = util.manhattanDistance(currentPosition,goal)
+                heuristic = util.manhattanDistance(currentPosition, goal)
 
                 if heuristic > maxValue:
                     maxValue = heuristic
@@ -542,34 +542,14 @@ class ClosestDotSearchAgent(SearchAgent):
         gameState.
         """
         # Here are some useful elements of the startState
-        #startPosition = gameState.getPacmanPosition()
-        #food = gameState.getFood()
-        #walls = gameState.getWalls()
-        #problem = AnyFoodSearchProblem(gameState)
+        startPosition = gameState.getPacmanPosition()
+        food = gameState.getFood()
+        walls = gameState.getWalls()
+        problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
 
-        food = gameState.getFood()
-        problem = AnyFoodSearchProblem(gameState)
-        foodList = food.asList()
-        startPosition = gameState.getPacmanPosition()
-
-        queue = util.Queue()
-        visited = []
-        queue.push((startPosition, []))
-
-        while not queue.isEmpty():
-            actPosition, path = queue.pop()
-
-            if actPosition not in visited:
-                visited.append(actPosition)
-
-                if problem.isGoalState(actPosition):
-                    return path
-
-                for nextNode, nodePath, cost in problem.getSuccessors(actPosition):
-                    newPath = path + [nodePath]
-                    queue.push((nextNode, newPath))
+        return search.breadthFirstSearch(problem)
 
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
