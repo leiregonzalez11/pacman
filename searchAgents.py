@@ -404,7 +404,7 @@ def cornersHeuristic(state, problem):
                     maxValue = heuristic
 
     return maxValue
-    "return 0" # Default to trivial solution
+    
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
