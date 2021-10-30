@@ -4,5 +4,4 @@ Primera práctica de la asignatura Técnicas de Inteligencia Artificial del grad
 Autoras:
 
 - Leire González López
-- 
 - Iria San Miguel Losantos
